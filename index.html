@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Programming Exam</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+<script src="https://cdn.jsdelivr.net/pyodide/v0.28.2/full/pyodide.js"></script>
+</head>
+
+<body>
+
+    <!-- ========================= -->
+<!-- 🏠 صفحة البداية -->
+<!-- ========================= -->
+
+<section id="start-screen">
+
+    <div class="start-decoration">💻</div>
+
+    <h1>Programming Exam</h1>
+
+    <p>
+        اختبر معلوماتك في البرمجة والتكنولوجيا
+    </p>
+
+    <div class="exam-types">
+
+        <!-- 📚 الامتحان النظري -->
+
+        <div class="exam-type-card">
+
+            <div class="exam-type-icon">📚</div>
+
+            <h2>الامتحان النظري</h2>
+
+            <p>
+                أسئلة اختيار من متعدد
+            </p>
+
+            <button type="button" id="theory-exam">
+                دخول النظري
+            </button>
+
+        </div>
+
+
+        <!-- 💻 الامتحان العملي -->
+
+        <div class="exam-type-card">
+
+            <div class="exam-type-icon">💻</div>
+
+            <h2>الامتحان العملي</h2>
+
+            <p>
+                تطبيق عملي في البرمجة
+            </p>
+
+            <button type="button" id="practical-exam">
+                دخول العملي
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- ========================= -->
+    <!-- 👤 كارت إدخال الاسم -->
+    <!-- ========================= -->
+
+    <section id="name-screen" class="hidden">
+
+        <div class="name-card">
+
+            <div class="name-icon">👤</div>
+
+            <h2>بيانات الطالب</h2>
+
+            <p>اكتب اسمك للدخول إلى الامتحان</p>
+
+            <input
+                type="text"
+                id="student-name"
+                placeholder="اكتب اسمك هنا"
+            >
+
+            <button
+                type="button"
+                id="enter-exam"
+                disabled
+            >
+                دخول الامتحان
+            </button>
+
+        </div>
+
+    </section>
+
+<!-- ========================= -->
+<!-- 💻 الامتحان العملي -->
+<!-- ========================= -->
+
+<section id="practical-screen" class="hidden">
+
+    <h1>Programming Practical Exam</h1>
+
+    <div id="practical-timer">10:00</div>
+
+    <p id="practical-progress" class="card1"></p>
+
+    <div class="practical-question-card">
+
+        <div class="practical-language" id="practical-language">
+            JavaScript
+        </div>
+
+        <h2 id="practical-question"></h2>
+        <div id="practical-options"></div>  
+        <div id="practical-content">
+
+    <textarea id="practical-code"></textarea>
+
+</div>
+
+        <div id="practical-result"></div>
+
+        <div class="practical-actions">
+
+    <button
+        type="button"
+        id="run-code"
+    >
+        ▶ تشغيل الكود
+    </button>
+<button
+    type="button"
+    id="practical-previous"
+>
+   ← السابق
+</button>
+    <button
+        type="button"
+        id="practical-next"
+    >
+        التالي ➜
+    </button>
+
+</div>
+
+    </div>
+
+</section>
+    <!-- ========================= -->
+    <!-- 📝 صفحة الامتحان -->
+    <!-- ========================= -->
+
+    <section id="exam-screen" class="hidden">
+
+        <h1>Programming Exam</h1>
+
+        <p id="question">
+            ما هي مراحل تطور التكنولوجيا؟
+        </p>
+
+        <div id="timer">05:00</div>
+
+        <div class="answer">
+
+            <button
+                type="button"
+                id="answer1"
+                class="answer-button"
+            ></button>
+
+            <button
+                type="button"
+                id="answer2"
+                class="answer-button"
+            ></button>
+
+            <button
+                type="button"
+                id="answer3"
+                class="answer-button"
+            ></button>
+
+            <button
+                type="button"
+                id="answer4"
+                class="answer-button"
+            ></button>
+
+        </div>
+
+        <button
+    type="button"
+    id="previous-question"
+>
+   ← السابق
+</button>
+
+<button
+    type="button"
+    id="next-question"
+>
+    التالي ➜
+</button>
+
+        <p id="result" class="card"></p>
+
+        <p id="progress" class="card1"></p>
+
+    </section>
+
+<section id="finish-screen" class="hidden">
+
+    <div class="finish-card">
+
+        <div class="finish-icon">⏰</div>
+
+        <h1>انتهى الامتحان</h1>
+
+        <p id="finish-message">
+            انتهى الوقت المحدد للامتحان.
+        </p>
+
+        <button type="button" id="go-results">
+            انتقل إلى صفحة النتائج
+        </button>
+
+    </div>
+
+</section>
+<!-- ========================= -->
+<!-- ⏰ انتهاء الامتحان العملي -->
+<!-- ========================= -->
+
+<section id="practical-finish-screen" class="hidden">
+
+    <div class="finish-card">
+
+        <div class="finish-icon">⏰</div>
+
+        <h1>انتهى الامتحان العملي</h1>
+
+        <p id="practical-finish-message">
+            انتهى الوقت المحدد للامتحان.
+        </p>
+
+        <button type="button" id="practical-go-results">
+            انتقل إلى صفحة النتائج
+        </button>
+
+    </div>
+
+</section>
+    <!-- ========================= -->
+    <!-- 📊 صفحة النتائج -->
+    <!-- ========================= -->
+
+    <section id="results-screen" class="hidden">
+
+        <div class="results-card">
+
+            <div class="results-icon">📊</div>
+
+            <h1>نتيجة الامتحان</h1>
+
+            <h2 id="result-name"></h2>
+
+            <div class="result-item">
+                <span>الدرجة</span>
+                <strong id="final-degree"></strong>
+            </div>
+
+            <div class="result-item">
+                <span>النسبة المئوية</span>
+                <strong id="final-percentage"></strong>
+            </div>
+
+            <div class="result-item">
+                <span>الوقت المستغرق</span>
+                <strong id="final-time"></strong>
+            </div>
+
+            <div class="result-item">
+                <span>الأسئلة المجابة</span>
+                <strong id="answered-count"></strong>
+            </div>
+
+            <div class="result-item">
+                <span>الأسئلة غير المجابة</span>
+                <strong id="unanswered-count"></strong>
+            </div>
+
+            <h2 id="pass-status"></h2>
+
+            <button
+                type="button"
+                id="certificate-button"
+                class="result-action"
+            >
+                🏆 احصل على الشهادة
+            </button>
+
+            <button
+                type="button"
+                id="retry-result-button"
+                class="result-action"
+            >
+                🔄 إعادة الامتحان
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- 🏆 صفحة الشهادة -->
+    <!-- ========================= -->
+
+    <section id="certificate-screen" class="hidden">
+
+        <div class="certificate">
+
+            <div class="certificate-border">
+
+                <div class="certificate-icon">
+                    🏆
+                </div>
+
+                <h1>شهادة إتمام الامتحان</h1>
+
+                <p>
+                    تشهد هذه الشهادة بأن
+                </p>
+
+                <h2 id="certificate-name"></h2>
+
+                <p>
+                    قد أتم بنجاح امتحان البرمجة والتكنولوجيا
+                </p>
+
+                <div class="certificate-details">
+
+                    <p>
+                        الدرجة:
+                        <strong id="certificate-degree"></strong>
+                    </p>
+
+                    <p>
+                        النسبة:
+                        <strong id="certificate-percentage"></strong>
+                    </p>
+
+                </div>
+
+                <p class="certificate-date" id="certificate-date"></p>
+
+                <div class="certificate-footer">
+                    <span>Programming Exam</span>
+                    <span>🏆</span>
+                    <span>Certificate</span>
+                </div>
+
+            </div>
+
+        </div>
+<button type="button" id="download-certificate">
+    📥 تحميل الشهادة
+</button>
+    </section>
+<button id="backToChoice">العودة لاختيار نوع الامتحان</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<!-- CodeMirror -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css"
+>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.css"
+>
+<script src="script.js"></script>
+
+</body>
+
+</html>
