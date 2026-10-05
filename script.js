@@ -2190,13 +2190,27 @@ retryResultButton.addEventListener("click", function() {
     startTimer();
 
 });
-downloadCertificateButton.addEventListener("click", function() {
+downloadCertificateButton.addEventListener("click", function () {
 
     let certificate = document.querySelector(".certificate");
 
+    if (!certificate) {
+        return;
+    }
+
+    let originalWidth = certificate.style.width;
+    let originalMaxWidth = certificate.style.maxWidth;
+    let originalMargin = certificate.style.margin;
+
+    certificate.style.width = "1120px";
+    certificate.style.maxWidth = "none";
+    certificate.style.margin = "0 auto";
+
     let options = {
         margin: 0,
-        filename: studentName + " - شهادة الامتحان.pdf",
+
+        filename:
+            studentName + " - شهادة الامتحان.pdf",
 
         image: {
             type: "jpeg",
@@ -2205,20 +2219,33 @@ downloadCertificateButton.addEventListener("click", function() {
 
         html2canvas: {
             scale: 2,
-            useCORS: true
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            logging: false
         },
 
         jsPDF: {
             unit: "mm",
             format: "a4",
             orientation: "landscape"
+        },
+
+        pagebreak: {
+            mode: ["avoid-all"]
         }
     };
 
     html2pdf()
         .set(options)
         .from(certificate)
-        .save();
+        .save()
+        .then(function () {
+
+            certificate.style.width = originalWidth;
+            certificate.style.maxWidth = originalMaxWidth;
+            certificate.style.margin = originalMargin;
+
+        });
 
 });
 theoryExamButton.addEventListener("click", function(){
