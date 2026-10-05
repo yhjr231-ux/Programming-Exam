@@ -2201,12 +2201,30 @@ downloadCertificateButton.addEventListener("click", function () {
     let originalWidth = certificate.style.width;
     let originalMaxWidth = certificate.style.maxWidth;
     let originalMargin = certificate.style.margin;
+    let originalDirection = certificate.style.direction;
 
     certificate.style.width = "1120px";
-    certificate.style.maxWidth = "none";
+    certificate.style.maxWidth = "1120px";
     certificate.style.margin = "0 auto";
+    certificate.style.direction = "rtl";
+
+    let arabicElements = certificate.querySelectorAll(
+        "h1, h2, p, strong"
+    );
+
+    arabicElements.forEach(function (element) {
+
+        element.style.direction = "rtl";
+        element.style.unicodeBidi = "plaintext";
+        element.style.textAlign = "center";
+        element.style.letterSpacing = "normal";
+        element.style.wordSpacing = "normal";
+        element.style.fontFamily = "Arial, Tahoma, sans-serif";
+
+    });
 
     let options = {
+
         margin: 0,
 
         filename:
@@ -2218,32 +2236,60 @@ downloadCertificateButton.addEventListener("click", function () {
         },
 
         html2canvas: {
-            scale: 2,
+
+            scale: 3,
+
             useCORS: true,
+
             backgroundColor: "#ffffff",
+
             logging: false
+
         },
 
         jsPDF: {
+
             unit: "mm",
+
             format: "a4",
+
             orientation: "landscape"
+
         },
 
         pagebreak: {
+
             mode: ["avoid-all"]
+
         }
+
     };
 
     html2pdf()
+
         .set(options)
+
         .from(certificate)
+
         .save()
+
         .then(function () {
 
             certificate.style.width = originalWidth;
             certificate.style.maxWidth = originalMaxWidth;
             certificate.style.margin = originalMargin;
+            certificate.style.direction = originalDirection;
+
+            arabicElements.forEach(function (element) {
+
+                element.style.direction = "";
+                element.style.unicodeBidi = "";
+                element.style.textAlign = "";
+                element.style.letterSpacing = "";
+                element.style.wordSpacing = "";
+                element.style.fontFamily = "";
+
+            });
 
         });
 
