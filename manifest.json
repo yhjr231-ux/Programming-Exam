@@ -1,6 +1,7 @@
 {
   "name": "Programming Exam",
   "short_name": "Prog Exam",
+  "id": "/Programming-Exam/",
   "description": "تطبيق امتحان البرمجة والتكنولوجيا",
   "start_url": "./",
   "display": "standalone",
